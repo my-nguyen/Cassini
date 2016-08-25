@@ -21,6 +21,7 @@ class ImageViewController: UIViewController, UIScrollViewDelegate {
             scrollView.maximumZoomScale = 1.0
         }
     }
+    @IBOutlet weak var spinner: UIActivityIndicatorView!
     var imageURL: NSURL? {
         didSet {
             image = nil
@@ -42,6 +43,8 @@ class ImageViewController: UIViewController, UIScrollViewDelegate {
             imageView.sizeToFit()
             // must set content size for the view to scroll; similarly for didSet() in scrollView property
             scrollView?.contentSize = imageView.frame.size
+            // turn the spinner off once the image is shown
+            spinner?.stopAnimating()
         }
     }
 
@@ -73,6 +76,8 @@ class ImageViewController: UIViewController, UIScrollViewDelegate {
 
     private func fetchImage() {
         if let url = imageURL {
+            // turn spinner on just before switching to background queue to go fetch data over the network
+            spinner?.startAnimating()
             let queue = dispatch_get_global_queue(QOS_CLASS_USER_INITIATED, 0)
             dispatch_async(queue) {
                 // on a background queue (user initiated), fetch raw image data from the URL
@@ -87,6 +92,9 @@ class ImageViewController: UIViewController, UIScrollViewDelegate {
                             // create an image out of the raw data;
                             // also this triggers the set method of the image property
                             self.image = UIImage(data: data)
+                        } else {
+                            // turn off spinner if no image data could be fetched
+                            self.spinner?.stopAnimating()
                         }
                     } else {
                         // if it's not the same URL, just ignore the data
