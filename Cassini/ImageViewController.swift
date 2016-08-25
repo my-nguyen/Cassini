@@ -10,6 +10,11 @@ import UIKit
 
 class ImageViewController: UIViewController {
 
+    @IBOutlet weak var scrollView: UIScrollView! {
+        didSet {
+            scrollView.contentSize = imageView.frame.size
+        }
+    }
     var imageURL: NSURL? {
         didSet {
             image = nil
@@ -29,11 +34,6 @@ class ImageViewController: UIViewController {
             scrollView?.contentSize = imageView.frame.size
         }
     }
-    @IBOutlet weak var scrollView: UIScrollView! {
-        didSet {
-            scrollView.contentSize = imageView.frame.size
-        }
-    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -43,16 +43,18 @@ class ImageViewController: UIViewController {
         // this would result in error: "App Transport Security has blocked a cleartext HTTP"
         // to fix it, in Info.plist, add new Dictionary entry named "App Transport Security Settings"
         // then in this dictionary, add one Boolean entry named "Allow Arbitrary Loads" and set it to YES
-        imageURL = NSURL(string: DemoURL.Stanford)
+        // also the Stanford URL is invalid
+        // imageURL = NSURL(string: DemoURL.Stanford)
+        imageURL = DemoURL.NASAImageNamed("Cassini")
     }
 
     private func fetchImage() {
         if let url = imageURL {
             // fetch raw image data from the URL
-            if let data = NSData(contentsOfURL: url) {
+            if let imageData = NSData(contentsOfURL: url) {
                 // create an image out of the raw data;
                 // also this triggers the set method of the image property
-                image = UIImage(data: data)
+                image = UIImage(data: imageData)
             }
         }
     }
