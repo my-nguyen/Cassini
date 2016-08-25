@@ -26,6 +26,12 @@ class ImageViewController: UIViewController {
         set {
             imageView.image = newValue
             imageView.sizeToFit()
+            scrollView?.contentSize = imageView.frame.size
+        }
+    }
+    @IBOutlet weak var scrollView: UIScrollView! {
+        didSet {
+            scrollView.contentSize = imageView.frame.size
         }
     }
 
@@ -33,7 +39,7 @@ class ImageViewController: UIViewController {
         super.viewDidLoad()
 
         // view is the top-level view in this view controller
-        view.addSubview(imageView)
+        scrollView.addSubview(imageView)
         // this would result in error: "App Transport Security has blocked a cleartext HTTP"
         // to fix it, in Info.plist, add new Dictionary entry named "App Transport Security Settings"
         // then in this dictionary, add one Boolean entry named "Allow Arbitrary Loads" and set it to YES
