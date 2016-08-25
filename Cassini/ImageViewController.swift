@@ -24,7 +24,10 @@ class ImageViewController: UIViewController, UIScrollViewDelegate {
     var imageURL: NSURL? {
         didSet {
             image = nil
-            fetchImage()
+            // make sure fetchImage() is called only in the UI
+            if view.window != nil {
+                fetchImage()
+            }
         }
     }
     // create a UIImageView in code and not in the main storyboard
@@ -55,6 +58,14 @@ class ImageViewController: UIViewController, UIScrollViewDelegate {
         // imageURL = NSURL(string: DemoURL.Stanford)
     }
 
+    // this method is invoked when you're about to appear on screen
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        if image == nil {
+            fetchImage()
+        }
+    }
+
     // implementation for UIScrollViewDelegate
     func viewForZoomingInScrollView(scrollView: UIScrollView) -> UIView? {
         return imageView
@@ -62,11 +73,26 @@ class ImageViewController: UIViewController, UIScrollViewDelegate {
 
     private func fetchImage() {
         if let url = imageURL {
-            // fetch raw image data from the URL
-            if let imageData = NSData(contentsOfURL: url) {
-                // create an image out of the raw data;
-                // also this triggers the set method of the image property
-                image = UIImage(data: imageData)
+            let queue = dispatch_get_global_queue(QOS_CLASS_USER_INITIATED, 0)
+            dispatch_async(queue) {
+                // on a background queue (user initiated), fetch raw image data from the URL
+                let contentsOfURL = NSData(contentsOfURL: url)
+                dispatch_async(dispatch_get_main_queue()) {
+                    // on the main queue
+                    if url == self.imageURL {
+                        // since the user may have issued multiple requests consecutively, make sure
+                        // the url being currently processed is the same one given to the non-main thread
+                        // to begin with.
+                        if let data = contentsOfURL {
+                            // create an image out of the raw data;
+                            // also this triggers the set method of the image property
+                            self.image = UIImage(data: data)
+                        }
+                    } else {
+                        // if it's not the same URL, just ignore the data
+                        print("ignored data returned from url \(url)")
+                    }
+                }
             }
         }
     }
