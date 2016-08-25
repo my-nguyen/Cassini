@@ -8,11 +8,17 @@
 
 import UIKit
 
-class ImageViewController: UIViewController {
+class ImageViewController: UIViewController, UIScrollViewDelegate {
 
     @IBOutlet weak var scrollView: UIScrollView! {
         didSet {
             scrollView.contentSize = imageView.frame.size
+            // for zooming
+            scrollView.delegate = self
+            scrollView.minimumZoomScale = 0.03
+            // maximumZoomScale of 1.0 is the default, meaning to keep the current scale and do not
+            // enlarge the picture
+            scrollView.maximumZoomScale = 1.0
         }
     }
     var imageURL: NSURL? {
@@ -47,6 +53,11 @@ class ImageViewController: UIViewController {
         // then in this dictionary, add one Boolean entry named "Allow Arbitrary Loads" and set it to YES
         // also the Stanford URL is invalid
         // imageURL = NSURL(string: DemoURL.Stanford)
+    }
+
+    // implementation for UIScrollViewDelegate
+    func viewForZoomingInScrollView(scrollView: UIScrollView) -> UIView? {
+        return imageView
     }
 
     private func fetchImage() {
