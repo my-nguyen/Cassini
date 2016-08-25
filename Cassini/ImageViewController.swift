@@ -47,7 +47,6 @@ class ImageViewController: UIViewController {
         // then in this dictionary, add one Boolean entry named "Allow Arbitrary Loads" and set it to YES
         // also the Stanford URL is invalid
         // imageURL = NSURL(string: DemoURL.Stanford)
-        imageURL = DemoURL.NASAImageNamed("Cassini")
     }
 
     private func fetchImage() {
