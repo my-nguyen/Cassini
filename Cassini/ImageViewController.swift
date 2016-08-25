@@ -21,7 +21,7 @@ class ImageViewController: UIViewController {
             fetchImage()
         }
     }
-    // create a UIImageView in code as opposed to in the main storyboard
+    // create a UIImageView in code and not in the main storyboard
     private var imageView = UIImageView()
     // computed property that stores its data elsewhere (in imageView)
     private var image: UIImage? {
@@ -31,6 +31,7 @@ class ImageViewController: UIViewController {
         set {
             imageView.image = newValue
             imageView.sizeToFit()
+            // must set content size for the view to scroll; similarly for didSet() in scrollView property
             scrollView?.contentSize = imageView.frame.size
         }
     }
@@ -38,7 +39,8 @@ class ImageViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // view is the top-level view in this view controller
+        // scroll view is now the top-level view in this view controller, so image view must be added as
+        // a subview of the scroll view; note scroll view is added in storyboard and not here in code
         scrollView.addSubview(imageView)
         // this would result in error: "App Transport Security has blocked a cleartext HTTP"
         // to fix it, in Info.plist, add new Dictionary entry named "App Transport Security Settings"
