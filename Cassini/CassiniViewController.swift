@@ -54,13 +54,18 @@ class CassiniViewController: UIViewController, UISplitViewControllerDelegate {
     // in the main storyboard, first remove the 3 segues from the 3 buttons to the navigation controller
     // of the Detail view, then create this target action from all 3 buttons
     @IBAction func showImage(sender: UIButton) {
-        // extract the contentViewController property from the last view controller (the Detail view)
-        // this ensures we're in a split (Master-Detail) view
         let lastController = splitViewController?.viewControllers.last?.contentViewController
         if let imageController = lastController as? ImageViewController {
+            // we're in a split view (Master-Detail): we're on an iPad, so extract
+            // the contentViewController property from the last view controller (the Detail view)
             let imageName = sender.currentTitle
             imageController.imageURL = DemoURL.NASAImageNamed(imageName)
             imageController.title = imageName
+        } else {
+            // no split view: we're on an iPhone, so create a segue programmatically
+            // before this, make sure in Story board to create a segue from the first view controller
+            // to the navigation controller of the image view
+            performSegueWithIdentifier(Storyboard.ShowImageSegue, sender: sender)
         }
     }
 }

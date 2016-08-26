@@ -67,10 +67,13 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Cassini" id="OvB-zT-FIW"/>
+                    <connections>
+                        <segue destination="Ckt-On-4uF" kind="show" identifier="Show Image" id="jYg-rM-dCx"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="YXz-Zy-Vuw" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-102" y="-539"/>
+            <point key="canvasLocation" x="-190" y="-548"/>
         </scene>
         <!--Image View Controller-->
         <scene sceneID="tne-QT-ifu">
@@ -146,7 +149,10 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="gyx-Ev-hWz" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-102" y="178"/>
+            <point key="canvasLocation" x="-190" y="213"/>
         </scene>
     </scenes>
+    <inferredMetricsTieBreakers>
+        <segue reference="jYg-rM-dCx"/>
+    </inferredMetricsTieBreakers>
 </document>
