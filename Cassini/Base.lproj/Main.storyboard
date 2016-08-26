@@ -38,7 +38,7 @@
                                         <fontDescription key="fontDescription" type="system" pointSize="40"/>
                                         <state key="normal" title="Cassini"/>
                                         <connections>
-                                            <segue destination="Ckt-On-4uF" kind="showDetail" identifier="Show Image" id="bH6-Un-Uvg"/>
+                                            <action selector="showImage:" destination="pHU-Uh-FIP" eventType="touchUpInside" id="yGg-pa-BnC"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aZ1-tY-53z">
@@ -46,7 +46,7 @@
                                         <fontDescription key="fontDescription" type="system" pointSize="40"/>
                                         <state key="normal" title="Saturn"/>
                                         <connections>
-                                            <segue destination="Ckt-On-4uF" kind="showDetail" identifier="Show Image" id="mRR-X2-a7I"/>
+                                            <action selector="showImage:" destination="pHU-Uh-FIP" eventType="touchUpInside" id="5sG-ZF-z6v"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XNz-xC-l0P">
@@ -54,7 +54,7 @@
                                         <fontDescription key="fontDescription" type="system" pointSize="40"/>
                                         <state key="normal" title="Earth"/>
                                         <connections>
-                                            <segue destination="Ckt-On-4uF" kind="showDetail" identifier="Show Image" id="WeC-JL-fFJ"/>
+                                            <action selector="showImage:" destination="pHU-Uh-FIP" eventType="touchUpInside" id="riK-RR-ayE"/>
                                         </connections>
                                     </button>
                                 </subviews>
@@ -149,7 +149,4 @@
             <point key="canvasLocation" x="-102" y="178"/>
         </scene>
     </scenes>
-    <inferredMetricsTieBreakers>
-        <segue reference="mRR-X2-a7I"/>
-    </inferredMetricsTieBreakers>
 </document>

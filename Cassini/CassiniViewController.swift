@@ -50,6 +50,19 @@ class CassiniViewController: UIViewController, UISplitViewControllerDelegate {
         // let the system do the collapse
         return false
     }
+
+    // in the main storyboard, first remove the 3 segues from the 3 buttons to the navigation controller
+    // of the Detail view, then create this target action from all 3 buttons
+    @IBAction func showImage(sender: UIButton) {
+        // extract the contentViewController property from the last view controller (the Detail view)
+        // this ensures we're in a split (Master-Detail) view
+        let lastController = splitViewController?.viewControllers.last?.contentViewController
+        if let imageController = lastController as? ImageViewController {
+            let imageName = sender.currentTitle
+            imageController.imageURL = DemoURL.NASAImageNamed(imageName)
+            imageController.title = imageName
+        }
+    }
 }
 
 // extension of existing class UIViewController
